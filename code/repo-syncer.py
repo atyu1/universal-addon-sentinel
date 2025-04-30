@@ -10,7 +10,7 @@ CMP_FILE_LIST_FILEPATH = "../files.yaml"
 
 def load_repositories():
     if not os.path.exists(REPO_LIST_FILEPATH):
-        print(f"❌ YAML file {yaml_file} not found!")
+        print(f"❌ YAML file {REPO_LIST_FILEPATH} not found!")
         return {}
 
     with open(REPO_LIST_FILEPATH, "r") as file:
