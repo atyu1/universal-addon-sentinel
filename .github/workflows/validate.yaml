@@ -1,7 +1,7 @@
 name: Compare Files Between Repositories
 
 on:
-  workflow_dispatch:
+  [push]
 
 jobs:
   compare-repos:
