@@ -22,5 +22,5 @@ jobs:
       - name: Run file comparison
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python repo-syncer.py
+        run: python code/repo-syncer.py
 
