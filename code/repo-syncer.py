@@ -5,8 +5,8 @@ import requests
 GITHUB_API_URL = "https://api.github.com"
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")  # Provided by GitHub Actions
 
-REPO_LIST_FILEPATH = "../repos.yaml"
-CMP_FILE_LIST_FILEPATH = "../files.yaml"
+REPO_LIST_FILEPATH = "repos.yaml"
+CMP_FILE_LIST_FILEPATH = "files.yaml"
 
 def load_repositories():
     if not os.path.exists(REPO_LIST_FILEPATH):
