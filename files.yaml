@@ -1,0 +1,6 @@
+  - addons.tf
+  - addons-irsa.tf
+  - addons-oidc.tf
+  - variables-addon.tf
+  - variables-addon-irsa.tf
+  - variables-addon-oidc.tf
