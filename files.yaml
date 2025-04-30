@@ -1,7 +1,9 @@
-  - addons.tf
-  - addons-irsa.tf
-  - addons-oidc.tf
+  - addon.tf
+  - addon-irsa.tf
+  - addon-oidc.tf
   - variables-addon.tf
   - variables-addon-irsa.tf
   - variables-addon-oidc.tf
   - requirements.txt
+  - versions.tf
+  - LICENSE
