@@ -75,4 +75,4 @@ if __name__ == "__main__":
         else:
             for parent_repo, sub_repos in repos.items():
                 print(f"\n🔍 Processing Parent Repo: {parent_repo}")
-                compare_files(parent_repo, sub_repos)
+                compare_files(parent_repo, sub_repos, files_to_compare)
