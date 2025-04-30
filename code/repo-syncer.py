@@ -1,4 +1,5 @@
 import os
+import yaml
 import requests
 
 # GitHub API URL and token
