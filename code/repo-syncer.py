@@ -9,7 +9,7 @@ REPO_LIST_FILEPATH = "../repos.yaml"
 CMP_FILE_LIST_FILEPATH = "../files.yaml"
 
 def load_repositories():
-    if not os.path.exists(yaml_file):
+    if not os.path.exists(REPO_LIST_FILEPATH):
         print(f"❌ YAML file {yaml_file} not found!")
         return {}
 
@@ -17,7 +17,7 @@ def load_repositories():
         return yaml.safe_load(file)
 
 def load_file_list():
-    if not os.path.exists(file_path):
+    if not os.path.exists(CMP_FILE_LIST_FILEPATH):
         print(f"⚠️ Configuration file {CMP_FILE_LIST_FILEPATH} not found!")
         return []
     with open(CMP_FILE_LIST_FILEPATH, "r") as file:
