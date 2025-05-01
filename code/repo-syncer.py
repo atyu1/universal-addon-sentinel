@@ -36,13 +36,24 @@ def fetch_file_content(repo, file_path, branch="main"):
         print(f"Failed to fetch {file_path} from {repo}: {response.status_code} {response.text}")
         return None
 
+def get_used_files_by_repo(sub_repo, file_cmp_list):
+    file_list = []
+
+    file_list.append(file_cmp_list["common"])
+
+    for repo_name, file_group in sub_repo.items():
+        file_list.append(file_cmp_list.get(file_group, ""))
+
+    return file_list
+
 def compare_files(parent_repo, sub_repos, file_cmp_list):
     all_in_sync = True
 
     for sub_repo in sub_repos:
         print(f"\nComparing files in {sub_repo} with {parent_repo}...\n")
 
-        for file_path in file_cmp_list:
+        file_list_used_by_repo = get_used_files_by_repo(sub_repo, file_cmp_list)
+        for file_path in file_list_used_by_repo:
             parent_content = fetch_file_content(parent_repo, file_path)
             sub_repo_content = fetch_file_content(sub_repo, file_path)
 

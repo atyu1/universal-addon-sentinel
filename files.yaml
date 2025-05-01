@@ -1,9 +1,15 @@
+common: # required, files present in every repo by default
   - addon.tf
-  - addon-irsa.tf
-  - addon-oidc.tf
   - variables-addon.tf
-  - variables-addon-irsa.tf
-  - variables-addon-oidc.tf
   - requirements.txt
   - versions.tf
   - LICENSE
+
+# create additional custom groups, which are present in your repo
+addon-irsa:
+  - addon-irsa
+  - variables-addon-irsa
+
+addon-irsa-oidc:
+  - addon-oidc
+  - variables-addon-oidc

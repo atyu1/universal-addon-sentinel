@@ -1,4 +1,4 @@
 ---
 "lablabs/terraform-aws-eks-universal-addon":   # Parent repo, against this we compare sub repos
-  - "lablabs/terraform-aws-eks-argo-workflows"
-  - "lablabs/terraform-aws-eks-efs-csi-driver"
+  - "lablabs/terraform-aws-eks-argo-workflows": "addon-irsa"
+  - "lablabs/terraform-aws-eks-efs-csi-driver": "addon-irsa"
