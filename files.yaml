@@ -11,5 +11,7 @@ addon-irsa:
   - variables-addon-irsa
 
 addon-irsa-oidc:
+  - addon-irsa
+  - variables-addon-irsa
   - addon-oidc
   - variables-addon-oidc
