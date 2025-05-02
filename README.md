@@ -99,5 +99,10 @@ Comparing files in atyu1/sub-repo-2 with atyu1/universal-addon-sentinel...
 
 ---
 
+## Future enhacements
+
+- Generate output report and save or send to have list of differencies
+- Automatically generate a PR to implement the missing changes
+
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
