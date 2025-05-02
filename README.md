@@ -1,7 +1,6 @@
 # Universal Addon Sentinel
 
-**Description**:  
-Universal Addon Sentinel is a GitHub Action-based automation tool designed to compare files between a parent repository and its sub-repositories. 
+    Universal Addon Sentinel is a GitHub Action-based automation tool designed to compare files between a parent repository and its sub-repositories. 
 Primary focus was to use for terraform-aws-eks-universal-addon project to ensure that repos copied from this project are in sync, when there are changes on universal repo. But can be used for other projects due to its dynamic form.
 It ensures synchronization and consistency across repositories by dynamically loading repository relationships and selected files for comparison. This project leverages `git diff` and YAML configuration files to provide detailed insights into differences between repositories.
 
