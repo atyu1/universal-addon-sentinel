@@ -4,6 +4,17 @@ common: # required, files present in every repo by default
   - requirements.txt
   - versions.tf
   - LICENSE
+  - docs/.addon.md
+  - docs/.footer.md
+  - docs/.inputs.md
+  - examples/basic/base.tf
+  - examples/basic/providers.tf
+  - examples/basic/versions.tf
+  - scripts/sync-variables.py
+  - .gitignore
+  - .pre-commit-config.yaml
+  - .templatesyncignore
+  - .terraform-docs.yml
 
 # create additional custom groups, which are present in your repo
 addon-irsa:
