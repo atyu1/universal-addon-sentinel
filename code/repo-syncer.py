@@ -52,7 +52,7 @@ def fetch_file_content(repo, file_path, branch="main"):
 
 def get_used_files_by_repo(sub_repo, file_cmp_list):
     repo = ""
-    file_list = file_cmp_list["common"]
+    file_list = file_cmp_list["common"][:]
 
     for repo_name, file_group in sub_repo.items():
         repo = repo_name
@@ -69,6 +69,8 @@ def compare_files(parent_repo, sub_repos, file_cmp_list):
             continue
 
         print(f"\n📄 Comparing files in {sub_repo} with {parent_repo}...\n")
+
+        file_list_used_by_repo = []
 
         sub_repo_name, file_list_used_by_repo = get_used_files_by_repo(sub_repo, file_cmp_list)
         for file_path in file_list_used_by_repo:
