@@ -25,7 +25,7 @@ def load_file_list():
     with open(CMP_FILE_LIST_FILEPATH, "r") as file:
         return yaml.safe_load(file) 
 
-def verify_pr_raised(repo)
+def verify_pr_raised(repo):
     url = f"{GITHUB_API_URL}/search/issues"
     headers = {"Authorization": f"token {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json"}
     query = f"repo:{GITHUB_OWNER}/{repo} is:pr label:{PR_RAISED_LABEL}"
