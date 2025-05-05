@@ -38,7 +38,8 @@ def verify_pr_raised(repo):
         return False
 
 def fetch_file_content(repo, file_path, branch="main"):
-    url = f"{GITHUB_API_URL}/repos/{repo}/contents/{file_path}?ref={branch}"
+    # url = f"{GITHUB_API_URL}/repos/{repo}/contents/{file_path}?ref={branch}"
+    url = f"https://raw.githubusercontent.com/{GITHUB_OWNER}/{repo}/refs/heads/main/{file_path}"
     headers = {"Authorization": f"token {GITHUB_TOKEN}"}
     response = requests.get(url, headers=headers)
 
