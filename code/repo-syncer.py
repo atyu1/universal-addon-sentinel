@@ -33,9 +33,9 @@ def verify_pr_raised(repo):
     response = requests.get(url, headers=headers, params=params)
 
     if response.status_code == 200:
-        return true
+        return True
     else:
-        return false
+        return False
 
 def fetch_file_content(repo, file_path, branch="main"):
     url = f"{GITHUB_API_URL}/repos/{repo}/contents/{file_path}?ref={branch}"
