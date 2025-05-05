@@ -33,6 +33,7 @@ def verify_pr_raised(repo):
     response = requests.get(url, headers=headers, params=params)
 
     if response.status_code == 200:
+        print(f"🛠️ skipping repo: {repo}, PR with label:{PR_RAISED_LABEL} already raised")
         return True
     else:
         return False
