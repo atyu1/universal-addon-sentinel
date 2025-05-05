@@ -38,8 +38,7 @@ def verify_pr_raised(repo):
         return False
 
 def fetch_file_content(repo, file_path, branch="main"):
-    # url = f"{GITHUB_API_URL}/repos/{repo}/contents/{file_path}?ref={branch}"
-    url = f"https://raw.githubusercontent.com/{GITHUB_OWNER}/{repo}/refs/heads/main/{file_path}"
+    url = f"{GITHUB_API_URL}/repos/{repo}/contents/{file_path}?ref={branch}"
     headers = {"Authorization": f"token {GITHUB_TOKEN}"}
     response = requests.get(url, headers=headers)
 
@@ -47,18 +46,18 @@ def fetch_file_content(repo, file_path, branch="main"):
         content = response.json().get("content")
         return content.encode("utf-8").decode("utf-8")  # Decode base64 content
     else:
-        print(f"Failed to fetch {file_path} from {repo}: {response.status_code} {response.text}")
+        print(f"🐛 Failed to fetch {file_path} from {repo}: {response.status_code} {response.text}")
         return None
 
 def get_used_files_by_repo(sub_repo, file_cmp_list):
-    file_list = []
-
-    file_list.append(file_cmp_list["common"])
+    repo = ""
+    file_list = file_cmp_list["common"]
 
     for repo_name, file_group in sub_repo.items():
-        file_list.append(file_cmp_list.get(file_group, ""))
+        repo = repo_name
+        file_list.extend(file_cmp_list.get(file_group, ""))
 
-    return file_list
+    return repo, file_list
 
 def compare_files(parent_repo, sub_repos, file_cmp_list):
     all_in_sync = True
@@ -70,10 +69,10 @@ def compare_files(parent_repo, sub_repos, file_cmp_list):
 
         print(f"\n📄 Comparing files in {sub_repo} with {parent_repo}...\n")
 
-        file_list_used_by_repo = get_used_files_by_repo(sub_repo, file_cmp_list)
+        sub_repo_name, file_list_used_by_repo = get_used_files_by_repo(sub_repo, file_cmp_list)
         for file_path in file_list_used_by_repo:
             parent_content = fetch_file_content(parent_repo, file_path)
-            sub_repo_content = fetch_file_content(sub_repo, file_path)
+            sub_repo_content = fetch_file_content(sub_repo_name, file_path)
 
             if parent_content and sub_repo_content:
                 if parent_content == sub_repo_content:
@@ -93,14 +92,14 @@ def compare_files(parent_repo, sub_repos, file_cmp_list):
 
 if __name__ == "__main__":
     if not GITHUB_TOKEN:
-        print("❌ GitHub token is not set. Ensure GITHUB_TOKEN is available as an environment variable.")
+        print("🐛 GitHub token is not set. Ensure GITHUB_TOKEN is available as an environment variable.")
     else:
         # Load repositories from the YAML file
         repos = load_repositories()
         files_to_compare = load_file_list()
 
         if not repos:
-            print("❌ No repositories to compare. Please check your YAML file.")
+            print("🐛 No repositories to compare. Please check your YAML file.")
         else:
             for parent_repo, sub_repos in repos.items():
                 print(f"\n🔍 Processing Parent Repo: {parent_repo}")

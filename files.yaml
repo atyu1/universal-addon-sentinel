@@ -18,11 +18,11 @@ common: # required, files present in every repo by default
 
 # create additional custom groups, which are present in your repo
 addon-irsa:
-  - addon-irsa
-  - variables-addon-irsa
+  - addon-irsa.tf
+  - variables-addon-irsa.tf
 
 addon-irsa-oidc:
-  - addon-irsa
-  - variables-addon-irsa
-  - addon-oidc
-  - variables-addon-oidc
+  - addon-irsa.tf
+  - variables-addon-irsa.tf
+  - addon-oidc.tf
+  - variables-addon-oidc.tf
