@@ -63,7 +63,7 @@ def compare_files(parent_repo, sub_repos, file_cmp_list):
     all_in_sync = True
 
     for sub_repo in sub_repos:
-        if verify_pr_raised(sub):
+        if verify_pr_raised(sub_repo):
             print(f"\n🏷️ Repo: {sub_repo} has PR already raised with label: {PR_RAISED_LABEL}")
             continue
 
