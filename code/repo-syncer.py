@@ -77,9 +77,9 @@ def compare_files(parent_repo, sub_repos, file_cmp_list):
 
             if parent_content and sub_repo_content:
                 if parent_content == sub_repo_content:
-                    print(f"✅ {file_path} is identical in both {parent_repo} and {sub_repo}.")
+                    print(f"✅ {file_path} is identical in both {parent_repo} and {sub_repo_name}.")
                 else:
-                    print(f"❌ {file_path} differs between {parent_repo} and {sub_repo}.")
+                    print(f"❌ {file_path} differs between {parent_repo} and {sub_repo_name}.")
                     all_in_sync = False
             else:
                 print(f"⚠️ Could not compare {file_path} due to missing content in one of the repositories.")
