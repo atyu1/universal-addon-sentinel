@@ -1,4 +1,5 @@
 import os
+import json
 import yaml
 import requests
 
@@ -32,7 +33,9 @@ def verify_pr_raised(repo):
     params = {"q": query}
     response = requests.get(url, headers=headers, params=params)
 
-    if response.status_code == 200:
+    number_of_prs = json.loads(response.text)["total_count"]
+
+    if response.status_code == 200 and number_of_prs > 0:
         print(f"🛠️ skipping repo: {repo}, PR with label:{PR_RAISED_LABEL} already raised")
         return True
     else:
@@ -45,7 +48,7 @@ def fetch_file_content(repo, file_path, branch="main"):
 
     if response.status_code == 200:
         content = response.json().get("content")
-        return content.encode("utf-8").decode("utf-8")  # Decode base64 content
+        return content.encode("utf-8")  # Decode base64 content
     else:
         print(f"🐛 Failed to fetch {file_path} from {repo}: {response.status_code} {response.text}")
         return None
@@ -64,13 +67,12 @@ def compare_files(parent_repo, sub_repos, file_cmp_list):
     all_in_sync = True
 
     for sub_repo in sub_repos:
+        print(f"\n📄 Comparing files in {sub_repo} with {parent_repo}...\n")
         file_list_used_by_repo = []
         sub_repo_name, file_list_used_by_repo = get_used_files_by_repo(sub_repo, file_cmp_list)
 
         if verify_pr_raised(sub_repo_name):
             continue
-
-        print(f"\n📄 Comparing files in {sub_repo} with {parent_repo}...\n")
 
         for file_path in file_list_used_by_repo:
             parent_content = fetch_file_content(parent_repo, file_path)
