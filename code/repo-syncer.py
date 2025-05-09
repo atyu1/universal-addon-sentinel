@@ -28,7 +28,7 @@ def load_file_list():
 def verify_pr_raised(repo):
     url = f"{GITHUB_API_URL}/search/issues"
     headers = {"Authorization": f"token {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json"}
-    query = f"repo:{GITHUB_OWNER}/{repo} is:pr label:{PR_RAISED_LABEL}"
+    query = f"repo:{repo} is:pr is:open label:{PR_RAISED_LABEL}"
     params = {"q": query}
     response = requests.get(url, headers=headers, params=params)
 
@@ -36,6 +36,9 @@ def verify_pr_raised(repo):
         print(f"🛠️ skipping repo: {repo}, PR with label:{PR_RAISED_LABEL} already raised")
         return True
     else:
+        print(url)
+        print (query)
+        print(str(response))
         return False
 
 def fetch_file_content(repo, file_path, branch="main"):
@@ -64,15 +67,15 @@ def compare_files(parent_repo, sub_repos, file_cmp_list):
     all_in_sync = True
 
     for sub_repo in sub_repos:
-        if verify_pr_raised(sub_repo):
+        file_list_used_by_repo = []
+        sub_repo_name, file_list_used_by_repo = get_used_files_by_repo(sub_repo, file_cmp_list)
+
+        if verify_pr_raised(sub_repo_name):
             print(f"\n🏷️ Repo: {sub_repo} has PR already raised with label: {PR_RAISED_LABEL}")
             continue
 
         print(f"\n📄 Comparing files in {sub_repo} with {parent_repo}...\n")
 
-        file_list_used_by_repo = []
-
-        sub_repo_name, file_list_used_by_repo = get_used_files_by_repo(sub_repo, file_cmp_list)
         for file_path in file_list_used_by_repo:
             parent_content = fetch_file_content(parent_repo, file_path)
             sub_repo_content = fetch_file_content(sub_repo_name, file_path)
