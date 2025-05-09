@@ -13,7 +13,6 @@ common: # required, files present in every repo by default
   - scripts/sync-variables.py
   - .gitignore
   - .pre-commit-config.yaml
-  - .templatesyncignore
   - .terraform-docs.yml
 
 # create additional custom groups, which are present in your repo
