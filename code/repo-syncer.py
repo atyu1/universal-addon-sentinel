@@ -36,9 +36,6 @@ def verify_pr_raised(repo):
         print(f"🛠️ skipping repo: {repo}, PR with label:{PR_RAISED_LABEL} already raised")
         return True
     else:
-        print(url)
-        print (query)
-        print(str(response))
         return False
 
 def fetch_file_content(repo, file_path, branch="main"):
@@ -71,7 +68,6 @@ def compare_files(parent_repo, sub_repos, file_cmp_list):
         sub_repo_name, file_list_used_by_repo = get_used_files_by_repo(sub_repo, file_cmp_list)
 
         if verify_pr_raised(sub_repo_name):
-            print(f"\n🏷️ Repo: {sub_repo} has PR already raised with label: {PR_RAISED_LABEL}")
             continue
 
         print(f"\n📄 Comparing files in {sub_repo} with {parent_repo}...\n")
