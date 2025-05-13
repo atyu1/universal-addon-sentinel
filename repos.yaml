@@ -4,3 +4,4 @@
   - "lablabs/terraform-aws-eks-external-secrets": ""
   - "lablabs/terraform-aws-eks-external-dns": "addon-irsa"
   - "lablabs/terraform-aws-eks-ebs-csi-driver": "addon-irsa"
+  - "lablabs/terraform-aws-eks-cilium" : ""
