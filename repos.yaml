@@ -1,7 +1,0 @@
----
-"lablabs/terraform-aws-eks-universal-addon":   # Parent repo, against this we compare sub repos
-  - "lablabs/terraform-aws-eks-argo-workflows": "addon-irsa"
-  - "lablabs/terraform-aws-eks-external-secrets": ""
-  - "lablabs/terraform-aws-eks-external-dns": "addon-irsa"
-  - "lablabs/terraform-aws-eks-ebs-csi-driver": "addon-irsa"
-  - "lablabs/terraform-aws-eks-cilium" : ""
