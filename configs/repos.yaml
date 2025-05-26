@@ -1,5 +1,4 @@
----
-parent: "lablabs/terraform-aws-eks-universal-addon":   # Parent repo, against this we compare sub repos
+parent: "lablabs/terraform-aws-eks-universal-addon"   # Parent repo, against this we compare sub repos
 repos:
   - name: "lablabs/terraform-aws-eks-argo-workflows" 
     category: "addon-irsa"
