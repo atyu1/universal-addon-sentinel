@@ -13,6 +13,18 @@ repos:
     - "addon-irsa"
   - name: "lablabs/terraform-aws-eks-cilium"
     category: []
+  - name: "lablabs/terraform-aws-eks-kube-state-metrics"
+    category: []
+  - name: "lablabs/terraform-aws-eks-kyverno"
+    category:
+    - "addon-irsa"
+  - name: "lablabs/terraform-aws-eks-kyverno-policy-reporter"
+    category:
+    - "addon-irsa"
+  - name: "lablabs/terraform-aws-eks-metrics-server"
+    category: []
+  - name: "lablabs/terraform-aws-eks-node-problem-detector"
+    category: []
   - name: "lablabs/terraform-aws-eks-cert-manager"
     category: 
     - "addon-irsa"
