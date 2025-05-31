@@ -20,8 +20,6 @@ addon-irsa:
   - addon-irsa.tf
   - variables-addon-irsa.tf
 
-addon-irsa-oidc:
-  - addon-irsa.tf
-  - variables-addon-irsa.tf
+addon-oidc:
   - addon-oidc.tf
   - variables-addon-oidc.tf
