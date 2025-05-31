@@ -10,3 +10,4 @@
   - "lablabs/terraform-aws-eks-kyverno-policy-reporter": "addon-irsa"
   - "lablabs/terraform-aws-eks-metrics-server": ""
   - "lablabs/terraform-aws-eks-node-problem-detector": ""
+  - "lablabs/terraform-aws-eks-cert-manager": "addon-irsa"
