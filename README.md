@@ -12,6 +12,7 @@ It ensures synchronization and consistency across repositories by dynamically lo
 - **Flexible File Selection**: Configurable file list in `files.yaml` to specify which files to compare.
 - **Detailed Output**: Provides a clear summary of file differences or confirms synchronization.
 - **GitHub Actions Integration**: Automates comparisons as part of CI/CD pipelines.
+- **CSV Export**: Optionally export comparison results to a CSV file for further analysis.
 
 ---
 
@@ -97,9 +98,16 @@ Comparing files in atyu1/sub-repo-2 with atyu1/universal-addon-sentinel...
    - Check the GitHub Actions logs for detailed results.
    - Download the difference reports if artifacts are configured in the workflow.
 
+4. **Enable CSV Export** (optional):
+   - Set the environment variable `ENABLE_CSV_EXPORT=true` before running the script.
+   - A timestamped CSV report will be created in the `exports/` directory, e.g. `exports/sync-report-2026-03-22_16-00-00.csv`.
+   - The CSV contains the following columns: `timestamp`, `parent_repo`, `sub_repo`, `file_path`, `status`.
+   - The `status` column can be one of: `identical`, `differs`, or `missing`.
+   - To enable in GitHub Actions, add `ENABLE_CSV_EXPORT: "true"` to the `env` block of the workflow step.
+
 ---
 
-## Future enhacements
+## Future enhancements
 
 - Generate output report and save or send to have list of differencies
 - Automatically generate a PR to implement the missing changes

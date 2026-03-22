@@ -1,7 +1,9 @@
+import csv
 import os
 import json
 import yaml
 import requests
+from datetime import datetime, timezone
 
 # GitHub API URL and token
 GITHUB_API_URL = "https://api.github.com"
@@ -10,6 +12,8 @@ GITHUB_OWNER = "lablabs"
 REPO_LIST_FILEPATH = "repos.yaml"
 CMP_FILE_LIST_FILEPATH = "files.yaml"
 PR_RAISED_LABEL = "kind/sync"
+ENABLE_CSV_EXPORT = os.getenv("ENABLE_CSV_EXPORT", "false").lower() == "true"
+CSV_EXPORT_DIR = "exports"
 
 def load_repositories():
     if not os.path.exists(REPO_LIST_FILEPATH):
@@ -63,8 +67,21 @@ def get_used_files_by_repo(sub_repo, file_cmp_list):
 
     return repo, file_list
 
+def export_to_csv(results):
+    os.makedirs(CSV_EXPORT_DIR, exist_ok=True)
+    timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
+    csv_filepath = os.path.join(CSV_EXPORT_DIR, f"sync-report-{timestamp}.csv")
+    fieldnames = ["timestamp", "parent_repo", "sub_repo", "file_path", "status"]
+    with open(csv_filepath, "w", newline="") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(results)
+    print(f"\n📊 CSV report saved to {csv_filepath}")
+
 def compare_files(parent_repo, sub_repos, file_cmp_list):
     all_in_sync = True
+    csv_results = []
+    run_timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     for sub_repo in sub_repos:
         print(f"\n📄 Comparing files in {sub_repo} with {parent_repo}...\n")
@@ -77,16 +94,31 @@ def compare_files(parent_repo, sub_repos, file_cmp_list):
         for file_path in file_list_used_by_repo:
             parent_content = fetch_file_content(parent_repo, file_path)
             sub_repo_content = fetch_file_content(sub_repo_name, file_path)
+            status = "missing"
 
             if parent_content and sub_repo_content:
                 if parent_content == sub_repo_content:
                     print(f"✅ {file_path} is identical in both {parent_repo} and {sub_repo_name}.")
+                    status = "identical"
                 else:
                     print(f"❌ {file_path} differs between {parent_repo} and {sub_repo_name}.")
                     all_in_sync = False
+                    status = "differs"
             else:
                 print(f"⚠️ Could not compare {file_path} due to missing content in one of the repositories.")
                 all_in_sync = False
+                status = "missing"
+
+            csv_results.append({
+                "timestamp": run_timestamp,
+                "parent_repo": parent_repo,
+                "sub_repo": sub_repo_name,
+                "file_path": file_path,
+                "status": status,
+            })
+
+    if ENABLE_CSV_EXPORT:
+        export_to_csv(csv_results)
 
     if all_in_sync:
         print("\n🎉 All files are in sync!")
