@@ -69,8 +69,9 @@ def get_used_files_by_repo(sub_repo, file_cmp_list):
 
 def export_to_csv(results):
     os.makedirs(CSV_EXPORT_DIR, exist_ok=True)
-    timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
-    csv_filepath = os.path.join(CSV_EXPORT_DIR, f"sync-report-{timestamp}.csv")
+    now = datetime.now(timezone.utc)
+    timestamp = now.strftime("%Y-%m-%d_%H-%M-%S-") + f"{now.microsecond // 1000:03d}"
+    csv_filepath = os.path.join(CSV_EXPORT_DIR, f"{timestamp}.csv")
     fieldnames = ["timestamp", "parent_repo", "sub_repo", "file_path", "status"]
     with open(csv_filepath, "w", newline="") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)

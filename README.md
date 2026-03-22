@@ -100,7 +100,7 @@ Comparing files in atyu1/sub-repo-2 with atyu1/universal-addon-sentinel...
 
 4. **Enable CSV Export** (optional):
    - Set the environment variable `ENABLE_CSV_EXPORT=true` before running the script.
-   - A timestamped CSV report will be created in the `exports/` directory, e.g. `exports/sync-report-2026-03-22_16-00-00.csv`.
+   - A timestamped CSV report will be created in the `exports/` directory, e.g. `exports/2026-03-22_16-00-00-000.csv`.
    - The CSV contains the following columns: `timestamp`, `parent_repo`, `sub_repo`, `file_path`, `status`.
    - The `status` column can be one of: `identical`, `differs`, or `missing`.
    - To enable in GitHub Actions, add `ENABLE_CSV_EXPORT: "true"` to the `env` block of the workflow step.
