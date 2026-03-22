@@ -2,6 +2,9 @@ name: Compare Files Between Repositories
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - copilot/add-csv-export-support
   schedule:
     - cron: '0 4 * * *' # every day at 04:00AM
 
@@ -24,5 +27,14 @@ jobs:
       - name: Run file comparison
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ENABLE_CSV_EXPORT: "true"
         run: python code/repo-syncer.py
+
+      - name: Upload CSV report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sync-csv-report
+          path: exports/*.csv
+          if-no-files-found: ignore
 
