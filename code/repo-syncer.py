@@ -67,11 +67,12 @@ def get_used_files_by_repo(sub_repo, file_cmp_list):
 
     return repo, file_list
 
-def export_to_csv(results):
+def export_to_csv(results, sub_repo_name):
     os.makedirs(CSV_EXPORT_DIR, exist_ok=True)
     now = datetime.now(timezone.utc)
     timestamp = now.strftime("%Y-%m-%d_%H-%M-%S-") + f"{now.microsecond // 1000:03d}"
-    csv_filepath = os.path.join(CSV_EXPORT_DIR, f"{timestamp}.csv")
+    safe_repo_name = sub_repo_name.replace("/", "_")
+    csv_filepath = os.path.join(CSV_EXPORT_DIR, f"{safe_repo_name}_{timestamp}.csv")
     fieldnames = ["timestamp", "parent_repo", "sub_repo", "file_path", "status"]
     with open(csv_filepath, "w", newline="") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -81,7 +82,6 @@ def export_to_csv(results):
 
 def compare_files(parent_repo, sub_repos, file_cmp_list):
     all_in_sync = True
-    csv_results = []
     run_timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     for sub_repo in sub_repos:
@@ -91,6 +91,8 @@ def compare_files(parent_repo, sub_repos, file_cmp_list):
 
         if verify_pr_raised(sub_repo_name):
             continue
+
+        csv_results = []
 
         for file_path in file_list_used_by_repo:
             parent_content = fetch_file_content(parent_repo, file_path)
@@ -118,8 +120,8 @@ def compare_files(parent_repo, sub_repos, file_cmp_list):
                 "status": status,
             })
 
-    if ENABLE_CSV_EXPORT:
-        export_to_csv(csv_results)
+        if ENABLE_CSV_EXPORT:
+            export_to_csv(csv_results, sub_repo_name)
 
     if all_in_sync:
         print("\n🎉 All files are in sync!")
